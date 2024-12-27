@@ -3,6 +3,7 @@ from collections import defaultdict
 import json
 import nltk
 from nltk.corpus import stopwords
+from dotenv import load_dotenv
 
 stopwords_set = set(stopwords.words('english'))
 
@@ -56,8 +57,12 @@ def save_inverted_index(inverted_index, output_path):
 
 # Example usage:
 if __name__ == "__main__":
-    # Path to the folder containing the documents
-    docs_folder = r"C:\Users\chrka\OneDrive\Documents\πανεπιστημιο\11ο εξάμηνο\Ανάκτηση Πληροφορίας\Ανάκτηση Πληροφορίας 2024-2025\collection\docs"
+    load_dotenv()
+
+    docs_folder = os.getenv("DOCS_FOLDER")
+
+    if not docs_folder:
+        raise ValueError("DOCS_FOLDER environment variable is not set!")
 
     # Create the Boolean inverted index
     boolean_index = create_boolean_inverted_index(docs_folder)

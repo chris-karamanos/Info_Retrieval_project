@@ -2,6 +2,7 @@ from collections import deque
 import json
 import os
 import re
+from dotenv import load_dotenv
 
 
 def infix_to_postfix(query):
@@ -102,7 +103,12 @@ if __name__ == "__main__":
     postfix_query = infix_to_postfix(query)
     print(f"Postfix Query: {postfix_query}")
 
-    docs_folder = r"C:\Users\chrka\OneDrive\Documents\πανεπιστημιο\11ο εξάμηνο\Ανάκτηση Πληροφορίας\Ανάκτηση Πληροφορίας 2024-2025\collection\docs"
+    load_dotenv()
+
+    docs_folder = os.getenv("DOCS_FOLDER")
+
+    if not docs_folder:
+        raise ValueError("DOCS_FOLDER environment variable is not set!")
 
     result = boolean_retrieval_model(postfix_query, boolean_index, docs_folder)
     print(f"Result: {result}")

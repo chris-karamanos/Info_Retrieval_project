@@ -1,8 +1,10 @@
 import os
 from collections import defaultdict
 import math
+import json
 import nltk
 from nltk.corpus import stopwords
+from dotenv import load_dotenv
 
 stopwords_set = set(stopwords.words('english'))
 
@@ -70,13 +72,18 @@ def save_vsm_inverted_index(vsm_inverted_index, output_path):
     - vsm_inverted_index (dict): The VSM inverted index to save.
     - output_path (str): Path to the output file.
     """
-    import json
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(vsm_inverted_index, f, indent=4)
 
 # Example usage
 if __name__ == "__main__":
-    docs_folder = r"C:\Users\chrka\OneDrive\Documents\πανεπιστημιο\11ο εξάμηνο\Ανάκτηση Πληροφορίας\Ανάκτηση Πληροφορίας 2024-2025\collection\docs"
+    load_dotenv()
+
+    docs_folder = os.getenv("DOCS_FOLDER")
+
+    if not docs_folder:
+        raise ValueError("DOCS_FOLDER environment variable is not set!")
+    
     vsm_index = create_vsm_inverted_index(docs_folder)
 
     # Save the index to a file
