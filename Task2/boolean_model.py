@@ -97,7 +97,8 @@ if __name__ == "__main__":
         raise FileNotFoundError(f"Index file not found: {index_file_path}")
 
    
-    query = "marriages AND french"
+    # Ask user for query input
+    query = input("Enter your Boolean query: ")
     print(f"Query: {query}")
 
     postfix_query = infix_to_postfix(query)
