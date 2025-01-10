@@ -1,4 +1,5 @@
 import math
+import os
 import json
 import re
 from collections import defaultdict, Counter
@@ -129,6 +130,19 @@ def cosine_similarity(query_vector, doc_vector):
 
     return dot_product / (query_magnitude * doc_magnitude)
 
+def save_retrieved_docs(doc_ids, docs_folder, output_file):
+    with open(output_file, 'w', encoding='utf-8') as out_file:
+        for doc_id in doc_ids:
+            doc_path = os.path.join(docs_folder, f"{doc_id}")
+            if os.path.exists(doc_path):
+                with open(doc_path, 'r', encoding='utf-8') as doc_file:
+                    content = doc_file.read()
+                    out_file.write(f"--- Document {doc_id} ---\n")
+                    out_file.write(content)
+                    out_file.write("\n\n")
+            else:
+                print(f"Document file for ID {doc_id} not found in {docs_folder}!")
+
 if __name__ == "__main__":
     # Step 1: Load the VSM Inverted Index
     vsm_index_path = "../Task1/vsm_inverted_index.json"
@@ -157,3 +171,12 @@ if __name__ == "__main__":
         print(f"Top Ranked Documents for Query {query_id}:")
         for doc_id, score in ranked_docs[:10]:  # Show top 10 documents
             print(f"  Document {doc_id}: {score:.4f}")
+
+        # Get top 5 ranked documents
+        top_docs = [doc_id for doc_id, _ in ranked_docs[:5]]   
+
+        # Save the contents of the top documents to a file
+        docs_folder = "../collection/docs"
+        output_file = f"vsm_retrieved_docs/vsm_retrieved_docs_query_{query_id}.txt"
+        save_retrieved_docs(top_docs, docs_folder, output_file)     
+

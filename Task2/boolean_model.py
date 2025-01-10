@@ -111,5 +111,23 @@ if __name__ == "__main__":
     if not docs_folder:
         raise ValueError("DOCS_FOLDER environment variable is not set!")
 
-    result = boolean_retrieval_model(postfix_query, boolean_index, docs_folder)
-    print(f"Result: {result}")
+     
+    # Perform the Boolean retrieval   
+    result_ids = boolean_retrieval_model(postfix_query, boolean_index, set(os.listdir(docs_folder)))
+    print(f"Matching Document IDs: {result_ids}")
+
+    # Store matching document contents in a file
+    output_file = "bool_retrieved_docs.txt"
+    with open(output_file, 'w', encoding='utf-8') as out_file:
+        for doc_id in result_ids:
+            doc_path = os.path.join(docs_folder, f"{doc_id}")
+            if os.path.exists(doc_path):
+                with open(doc_path, 'r', encoding='utf-8') as doc_file:
+                    content = doc_file.read()
+                    out_file.write(f"--- Document {doc_id} ---\n")
+                    out_file.write(content)
+                    out_file.write("\n\n")
+            else:
+                print(f"Document file for ID {doc_id} not found in {docs_folder}!")
+
+    print(f"Matching documents have been saved to {output_file}")
