@@ -5,32 +5,15 @@ import re
 from collections import defaultdict, Counter
 from nltk.corpus import stopwords
 
-# Define the stop words set
 stopwords_set = set(stopwords.words('english'))
 
 def load_vsm_inverted_index(index_path):
-    """
-    Load the VSM inverted index from a JSON file.
-
-    Args:
-    - index_path (str): Path to the VSM inverted index JSON file.
-
-    Returns:
-    - dict: The VSM inverted index.
-    """
+    
     with open(index_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 def load_queries(queries_path):
-    """
-    Load and parse queries from Queries.txt.
-
-    Args:
-    - queries_path (str): Path to the queries file.
-
-    Returns:
-    - dict: A dictionary mapping query IDs to their text.
-    """
+    
     queries = {}
     with open(queries_path, 'r', encoding='utf-8') as f:
         for i, line in enumerate(f, start=1):
@@ -42,18 +25,8 @@ def load_queries(queries_path):
     return queries
 
 def process_query(query, vsm_inverted_index, total_documents):
-    """
-    Process a query and compute its TF-IDF vector.
-
-    Args:
-    - query (str): The user's query.
-    - vsm_inverted_index (dict): The VSM inverted index.
-    - total_documents (int): Total number of documents in the collection.
-
-    Returns:
-    - dict: The TF-IDF vector for the query.
-    """
-    # Tokenize the query and filter out stop words
+    
+    
     tokens = [token for token in re.findall(r'\w+', query.lower()) if token not in stopwords_set and len(token) > 2]
     
     # Count term frequencies in the query
@@ -77,16 +50,6 @@ def process_query(query, vsm_inverted_index, total_documents):
     return query_vector
 
 def rank_documents(query_vector, vsm_inverted_index):
-    """
-    Rank documents based on their cosine similarity to the query vector.
-
-    Args:
-    - query_vector (dict): TF-IDF vector for the query.
-    - vsm_inverted_index (dict): The VSM inverted index.
-
-    Returns:
-    - list: A list of tuples (doc_id, similarity_score), sorted by similarity score in descending order.
-    """
 
     document_vectors = defaultdict(dict)
 
@@ -107,20 +70,9 @@ def rank_documents(query_vector, vsm_inverted_index):
 
 
 def cosine_similarity(query_vector, doc_vector):
-    """
-    Compute the cosine similarity between two vectors.
-
-    Args:
-    - query_vector (dict): TF-IDF vector for the query.
-    - doc_vector (dict): TF-IDF vector for a document.
-
-    Returns:
-    - float: The cosine similarity score.
-    """
-    # Compute dot product
+   
     dot_product = sum(query_vector.get(term, 0) * doc_vector.get(term, 0) for term in query_vector)
 
-    # Compute magnitudes
     query_magnitude = math.sqrt(sum(weight**2 for weight in query_vector.values()))
     doc_magnitude = math.sqrt(sum(weight**2 for weight in doc_vector.values()))
 
@@ -147,12 +99,10 @@ if __name__ == "__main__":
     # Step 1: Load the VSM Inverted Index
     vsm_index_path = "../Task1/vsm_inverted_index.json"
     vsm_inverted_index = load_vsm_inverted_index(vsm_index_path)
-    print(f"Loaded VSM Inverted Index: {len(vsm_inverted_index)} terms.")
 
     # Step 2: Load and Parse Queries
     queries_path = "../collection/Queries.txt"
     queries = load_queries(queries_path)
-    print(f"Loaded Queries: {len(queries)} queries.")
     
     # Total number of documents
     total_documents = len(set(doc_id for term_docs in vsm_inverted_index.values() for doc_id in term_docs))
@@ -167,7 +117,6 @@ if __name__ == "__main__":
         # Rank documents based on cosine similarity
         ranked_docs = rank_documents(query_vector, vsm_inverted_index)
         
-        # Display top 10 ranked documents
         print(f"Top Ranked Documents for Query {query_id}:")
         for doc_id, score in ranked_docs[:10]:  # Show top 10 documents
             print(f"  Document {doc_id}: {score:.4f}")
@@ -179,4 +128,3 @@ if __name__ == "__main__":
         docs_folder = "../collection/docs"
         output_file = f"vsm_retrieved_docs/vsm_retrieved_docs_query_{query_id}.txt"
         save_retrieved_docs(top_docs, docs_folder, output_file)     
-

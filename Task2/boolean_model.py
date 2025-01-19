@@ -6,15 +6,7 @@ from dotenv import load_dotenv
 
 
 def infix_to_postfix(query):
-    """
-    Convert an infix Boolean query to postfix notation.
-    
-    Args:
-    - query (str): The Boolean query in infix form.
-
-    Returns:
-    - list: The query in postfix form as a list of tokens.
-    """
+   
     precedence = {"NOT": 3, "AND": 2, "OR": 1}
     output = []
     operators = deque()
@@ -41,19 +33,7 @@ def infix_to_postfix(query):
     return output
 
 
-
 def boolean_retrieval_model(query, inverted_index, all_docs):
-    """
-    Perform Boolean retrieval using a stack and collections.deque.
-
-    Args:
-    - query (str): The Boolean query (e.g., "term1 AND NOT term2").
-    - inverted_index (dict): Boolean inverted index.
-    - all_docs (set): A set of all document IDs.
-
-    Returns:
-    - set: A set of document IDs that satisfy the query.
-    """
 
     # Initialize an empty stack using deque
     stack = deque()
@@ -104,12 +84,7 @@ if __name__ == "__main__":
     postfix_query = infix_to_postfix(query)
     print(f"Postfix Query: {postfix_query}")
 
-    load_dotenv()
-
-    docs_folder = os.getenv("DOCS_FOLDER")
-
-    if not docs_folder:
-        raise ValueError("DOCS_FOLDER environment variable is not set!")
+    docs_folder = "../collection/docs"
 
      
     # Perform the Boolean retrieval   

@@ -7,15 +7,7 @@ sys.path.append(os.path.abspath("../Task3"))
 from vector_space_model import process_query, rank_documents
 
 def load_relevant_documents(relevant_file):
-    """
-    Load relevant documents from Relevant.txt into a dictionary.
-
-    Args:
-    - relevant_file (str): Path to the Relevant.txt file.
-
-    Returns:
-    - dict: Dictionary with query IDs as keys and sets of relevant document IDs as values.
-    """
+   
     relevant_docs = {}
     with open(relevant_file, 'r', encoding='utf-8') as file:
         for i, line in enumerate(file, start=1):
@@ -23,17 +15,7 @@ def load_relevant_documents(relevant_file):
     return relevant_docs
 
 def compute_incremental_metrics_vsm(query_file, relevant_file, index_file):
-    """
-    Compute precision scores incrementally for the top 10 documents retrieved by the Vector Space Model.
 
-    Args:
-    - query_file (str): Path to the file containing queries.
-    - relevant_file (str): Path to the file containing relevant document IDs.
-    - index_file (str): Path to the inverted index JSON file with TF-IDF values.
-
-    Returns:
-    - dict: Incremental precision scores for each query.
-    """
     # Load queries
     with open(query_file, 'r', encoding='utf-8') as f:
         queries = {i + 1: line.strip() for i, line in enumerate(f)}
@@ -75,7 +57,6 @@ def compute_incremental_metrics_vsm(query_file, relevant_file, index_file):
             recall_at_k.append(recall)
 
 
-        # Print retrieved documents
         print(f"Query {query_id}: Retrieved documents = {retrieved_docs}")
 
         # Save incremental precision and recall scores for this query
@@ -86,7 +67,6 @@ def compute_incremental_metrics_vsm(query_file, relevant_file, index_file):
 
     return incremental_metrics_scores
 
-# Example usage
 if __name__ == "__main__":
     query_file = "../collection/Queries.txt"
     relevant_file = "../collection/Relevant.txt"
@@ -94,7 +74,6 @@ if __name__ == "__main__":
 
     incremental_metrics_scores = compute_incremental_metrics_vsm(query_file, relevant_file, index_file)
 
-    # Print incremental precision scores
     for query_id, metrics in incremental_metrics_scores.items():
         print(f"Query {query_id}:")
         for k, (precision,recall) in enumerate(zip(metrics["precision"],metrics["recall"]), start=1):
