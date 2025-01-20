@@ -42,7 +42,6 @@ def create_vsm_inverted_index(docs_path):
         max_freq = max(term_frequencies.values(), default=1)
 
         for term, tf in term_frequencies.items():
-            # Calculate TF (normalized by document length)
             tf_value = tf /max_freq
 
             # Calculate IDF

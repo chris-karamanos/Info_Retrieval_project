@@ -1,0 +1,20 @@
+Query 1: mucolytic OR effective OR inhalations OR treatment OR agents
+Query 2: lung OR role OR disease OR treatment OR aerosols
+Query 3: alveolar OR leukocytes OR disease OR lung OR phagocytosis OR role OR bacterial OR polymorphonuclear OR macrophages
+Query 4: aeruginosa OR influenzae OR relationship OR haemophilus OR pseudomonas
+Query 5: organs OR lung OR ever OR develop OR infection
+Query 6: bacteria OR aeruginosa OR lung OR influenzae OR aureus OR pathogenesis OR haemophilus OR role OR pseudomonas OR disease OR staphylococcus
+Query 7: lung OR pathogenesis OR fungi OR role OR disease
+Query 8: viral OR lung OR infection OR role OR disease
+Query 9: epidemiology OR aeruginosa OR pseudomonas
+Query 10: appearance OR factors OR aeruginosa OR mucoid OR responsible OR pseudomonas OR strains
+Query 11: pancreatic OR lung OR unusual OR exocrine OR insufficiency OR manifestations OR disease
+Query 12: prognosis AND survival
+Query 13: intelligence OR normal
+Query 14: models OR animal OR relevant OR available
+Query 15: muscle OR function OR structure OR abnormalities OR skeletal OR found
+Query 16: caries OR problems OR dental OR periodontal OR increased OR disease OR incidence
+Query 17: cells OR oxygen OR blood OR red OR transport OR abnormal
+Query 18: brain OR system OR function OR nervous OR central OR development OR effects
+Query 19: abnormalities OR taste
+Query 20: incidence OR hypertrophic OR treatment OR osteoarthropathy
