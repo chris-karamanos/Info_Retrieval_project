@@ -2,7 +2,6 @@ from collections import deque
 import json
 import os
 import re
-from dotenv import load_dotenv
 
 
 def infix_to_postfix(query):
